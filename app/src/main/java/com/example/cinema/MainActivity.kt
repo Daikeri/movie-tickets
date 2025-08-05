@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.example.cinema.feature.movielist.presentation.ui.MovieListScreen
 import com.example.cinema.ui.theme.CinemaTheme
 
 class MainActivity : ComponentActivity() {
@@ -38,6 +39,11 @@ class MainActivity : ComponentActivity() {
                     WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             }
 
+            MovieListScreen(
+                modifier = Modifier
+                    .safeDrawingPadding()
+                    .fillMaxSize()
+            )
         }
     }
 }
