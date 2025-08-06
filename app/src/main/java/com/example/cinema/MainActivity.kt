@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                 val controller = WindowCompat.getInsetsController(window, view)
 
                 // Цвет иконок (true = тёмные, false = светлые)
-                controller.isAppearanceLightStatusBars = true
+                controller.isAppearanceLightStatusBars = false
 
                 // Поведение при скролле (важно для edge-to-edge)
                 controller.systemBarsBehavior =
