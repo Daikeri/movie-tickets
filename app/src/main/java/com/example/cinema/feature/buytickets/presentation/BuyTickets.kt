@@ -48,7 +48,6 @@ fun BuyTicketsScreen(modifier: Modifier = Modifier) {
     var isGestureActive by remember { mutableStateOf(false) }
     val localScope = rememberCoroutineScope()
 
-    // Анимация для плавного возврата
     val animatedScale by animateFloatAsState(
         targetValue = if (!isGestureActive) 1f else scale,
         animationSpec = spring(dampingRatio = 0.5f, stiffness = 300f),
@@ -71,10 +70,19 @@ fun BuyTicketsScreen(modifier: Modifier = Modifier) {
                 }
             }
             .pointerInput(Unit) {
-                awaitEachGesture { val event = awaitPointerEvent() }
+                awaitEachGesture {
+                    do {
+                        val event = awaitPointerEvent()
+                    } while (event.changes.any { it.pressed })
+
+                    localScope.launch {
+                        delay(200)
+                        isGestureActive = false
+                        scale = 1f
+                        offset = Offset.Zero
+                    }
+                }
             }
-
-
     ) {
         Column(
             modifier = Modifier
