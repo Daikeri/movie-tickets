@@ -40,6 +40,15 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.geometry.Size
+
+import androidx.compose.ui.graphics.drawscope.Stroke
+
 @Preview
 @Composable
 fun BuyTicketsScreen(modifier: Modifier = Modifier) {
@@ -84,6 +93,17 @@ fun BuyTicketsScreen(modifier: Modifier = Modifier) {
                 }
             }
     ) {
+
+        CurvedScreen(
+            modifier = Modifier
+                .graphicsLayer(
+                    scaleX = animatedScale,
+                    scaleY = animatedScale,
+                    translationX = animatedOffset.x,
+                    translationY = animatedOffset.y
+                )
+        )
+
         Column(
             modifier = Modifier
                 .align(Alignment.Center)
@@ -95,19 +115,59 @@ fun BuyTicketsScreen(modifier: Modifier = Modifier) {
                 )
 
         ) {
-            repeat(8) {
+            repeat(6) {
                 Row {
-                   repeat(8) {
+                   repeat(6) {
                        Box(
-                           modifier
+                           modifier = Modifier
                                .size(40.dp)
                                .padding(horizontal = 10.dp, vertical = 10.dp)
                                .background(Color.Blue)
-
                        )
                    }
                 }
             }
         }
     }
+}
+
+
+
+
+
+
+
+@Composable
+fun CurvedScreen(modifier: Modifier = Modifier) {
+    Box(modifier = modifier) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            val canvasWidth = size.width
+            val canvasHeight = size.height
+
+            // Настройки дуги
+            val arcHeight = 200f  // Чем больше, тем круче дуга
+            val startX = 200f      // Отступ слева
+            val endX = canvasWidth - 200f  // Отступ справа (можно сделать разным)
+            val arcWidth = endX - startX + arcHeight // Ширина дуги (с запасом для выпуклости)
+
+            drawArc(
+                color = Color.Gray,
+                startAngle = 200f,
+                sweepAngle = 140f,
+                useCenter = false,
+                topLeft = Offset(
+                    x = startX - (arcWidth - (endX - startX)) / 2,  // Центрируем дугу между startX и endX
+                    y = canvasHeight * 0.2f  // Смещение сверху
+                ),
+                size = Size(arcWidth, arcHeight),
+                style = Stroke(width = 4f)
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewCurvedScreen() {
+    CurvedScreen()
 }
