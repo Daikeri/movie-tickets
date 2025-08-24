@@ -45,9 +45,14 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 
 import androidx.compose.ui.graphics.drawscope.Stroke
+import com.example.cinema.ui.theme.OffWhite
+import com.example.cinema.ui.theme.White
 
 @Preview
 @Composable
@@ -92,6 +97,7 @@ fun BuyTicketsScreen(modifier: Modifier = Modifier) {
                     }
                 }
             }
+            .background(White)
     ) {
 
         CurvedScreen(
@@ -104,7 +110,7 @@ fun BuyTicketsScreen(modifier: Modifier = Modifier) {
                 )
         )
 
-        Column(
+        SeatsGrid(
             modifier = Modifier
                 .align(Alignment.Center)
                 .graphicsLayer(
@@ -113,29 +119,40 @@ fun BuyTicketsScreen(modifier: Modifier = Modifier) {
                     translationX = animatedOffset.x,
                     translationY = animatedOffset.y
                 )
+        )
 
-        ) {
-            repeat(6) {
-                Row {
-                   repeat(6) {
-                       Box(
-                           modifier = Modifier
-                               .size(40.dp)
-                               .padding(horizontal = 10.dp, vertical = 10.dp)
-                               .background(Color.Blue)
-                       )
-                   }
+        BottomSheet(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .height(120.dp)
+                .background(OffWhite)
+        )
+
+    }
+}
+
+@Composable
+fun SeatsGrid(modifier: Modifier) {
+    Column(
+        modifier = modifier
+    ) {
+        repeat(6) {
+            Row {
+                repeat(7) { index ->
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .padding(horizontal = 10.dp, vertical = 10.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(if (index == 3) Color.Blue.copy(0f) else Color.Blue)
+
+                    )
                 }
             }
         }
     }
 }
-
-
-
-
-
-
 
 @Composable
 fun CurvedScreen(modifier: Modifier = Modifier) {
@@ -166,8 +183,33 @@ fun CurvedScreen(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
+
 @Composable
-fun PreviewCurvedScreen() {
-    CurvedScreen()
+fun BottomSheet(modifier: Modifier) {
+    Column(
+        modifier = modifier
+    ) {
+        Text(text = "Data & time")
+
+        LazyRow {
+
+        }
+    }
 }
+
+@Composable
+fun DateItem(modifier: Modifier) {
+
+}
+
+@Composable
+fun TimeItem(modifier: Modifier) {
+
+}
+
+@Composable
+fun TotalSum() {
+
+}
+
+
