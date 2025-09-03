@@ -73,8 +73,9 @@ fun BuyTicketsScreen(modifier: Modifier = Modifier) {
         label = "offset_animation"
     )
 
-    Box(
-        modifier = modifier
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
             .fillMaxSize()
             .pointerInput(Unit) {
                 detectTransformGestures { centroid, pan, zoom, _ ->
@@ -99,9 +100,10 @@ fun BuyTicketsScreen(modifier: Modifier = Modifier) {
             }
             .background(White)
     ) {
-
         CurvedScreen(
             modifier = Modifier
+                .weight(1f)
+                .background(Color.Blue)
                 .graphicsLayer(
                     scaleX = animatedScale,
                     scaleY = animatedScale,
@@ -112,7 +114,9 @@ fun BuyTicketsScreen(modifier: Modifier = Modifier) {
 
         SeatsGrid(
             modifier = Modifier
-                .align(Alignment.Center)
+                .weight(1f)
+                .fillMaxWidth()
+                .background(Color.Red)
                 .graphicsLayer(
                     scaleX = animatedScale,
                     scaleY = animatedScale,
@@ -123,18 +127,77 @@ fun BuyTicketsScreen(modifier: Modifier = Modifier) {
 
         BottomSheet(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
+                .weight(1f)
                 .fillMaxWidth()
                 .height(120.dp)
                 .background(OffWhite)
         )
 
     }
+
+//    Box(
+//        modifier = modifier
+//            .fillMaxSize()
+//            .pointerInput(Unit) {
+//                detectTransformGestures { centroid, pan, zoom, _ ->
+//                    isGestureActive = true
+//                    scale = (scale * zoom).coerceIn(0.5f, 3f)
+//                    offset += pan
+//                }
+//            }
+//            .pointerInput(Unit) {
+//                awaitEachGesture {
+//                    do {
+//                        val event = awaitPointerEvent()
+//                    } while (event.changes.any { it.pressed })
+//
+//                    localScope.launch {
+//                        delay(200)
+//                        isGestureActive = false
+//                        scale = 1f
+//                        offset = Offset.Zero
+//                    }
+//                }
+//            }
+//            .background(White)
+//    ) {
+//
+//        CurvedScreen(
+//            modifier = Modifier
+//                .graphicsLayer(
+//                    scaleX = animatedScale,
+//                    scaleY = animatedScale,
+//                    translationX = animatedOffset.x,
+//                    translationY = animatedOffset.y
+//                )
+//        )
+//
+//        SeatsGrid(
+//            modifier = Modifier
+//                .align(Alignment.Center)
+//                .graphicsLayer(
+//                    scaleX = animatedScale,
+//                    scaleY = animatedScale,
+//                    translationX = animatedOffset.x,
+//                    translationY = animatedOffset.y
+//                )
+//        )
+//
+//        BottomSheet(
+//            modifier = Modifier
+//                .align(Alignment.BottomCenter)
+//                .fillMaxWidth()
+//                .height(120.dp)
+//                .background(OffWhite)
+//        )
+//
+//    }
 }
 
 @Composable
 fun SeatsGrid(modifier: Modifier) {
     Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
         repeat(6) {
